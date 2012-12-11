@@ -20,7 +20,7 @@ public class Screen {
 	
 	private JButton but;
 	private JRadioButton bis, fav, prod, other;
-	private JTextArea board;
+	private static JTextArea board;		//用static才能在別的地方使用Screen.function()
 	private JTextField txa;
 	private	JScrollPane spText;
 	private ButtonGroup butType;
@@ -114,6 +114,10 @@ public class Screen {
 		}else{
 			return null;
 		}
+	}
+	//提供寫入board的函式
+	public static void printTextInBoard(String msg){
+		board.setText(msg);
 	}
 	//當search被按下時發生的事情
 	class searchListener implements ActionListener{
