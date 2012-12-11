@@ -35,7 +35,7 @@ public class Screen {
         demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//設定右上角叉號刪除功能
         //當setEnable設置false時，用這段改變默認的灰色字體
         UIManager.put("TextArea.inactiveForeground", new Color(105, 105, 105));
-        
+        int i;
         con = demo.getContentPane();
         con.setBackground(Color.white);
         
