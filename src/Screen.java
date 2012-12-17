@@ -129,18 +129,21 @@ public class Screen{
         cho.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		model.clear();
-            	board.setText(tokenid.getSelectedItem().toString());
             	int i = 0;
+            	String str = tokenid.getSelectedItem().toString();
+            	board.setText(tokenid.getSelectedItem().toString());
+            	
             	String[] textid = null;
             	textid = new String[50];
             	Main_Process temp = new Main_Process();
 				try {
-					textid = temp.result_search(tokenid.getSelectedItem().toString());
+					textid = temp.result_search(str);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} finally {
 	            	while(textid[i] != null){
+	            		System.out.println(str+":"+textid[i]);
 	        			sendStr2List(textid[i]);
 	        			i++;
 	        		}

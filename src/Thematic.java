@@ -24,7 +24,7 @@ public class Thematic {
 			// TODO 自動產生的 catch 區塊
 			e.printStackTrace();
 		}
-		System.out.println(ja);
+		//System.out.println(ja);
 		//新加測試結束，JSONArray型態的ja為一陣列格式。若要取得第一筆資料可用get(0)來獲取
 		//EX:ja.get(0) (型態為object而非string)
 		Screen screen = new Screen();
