@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
 
 import org.json.*;
@@ -71,7 +71,7 @@ public class Main_Process {
         BufferedReader br = null;
 		String article_ID = null,product_temp = null;
 		String csv_product_ID;
-		String[] csv_atricle_ID = new String[50];
+		String[] csv_article_ID = new String[50];
         String str_readLine = "";
         int count = 0;
 
@@ -87,22 +87,32 @@ public class Main_Process {
 				for(int i = 0;i<product_temp.split(" ").length;i++) {
 					csv_product_ID = product_temp.split(" ")[i];
 					if(search_str.compareTo(csv_product_ID) == 0) {
-						csv_atricle_ID[count] = article_ID;
-						count++;
+						if(count != 0) {
+							if(csv_article_ID[count-1].compareTo(article_ID) != 0) {
+							csv_article_ID[count] = article_ID;
+							count++;
+							}
+						}
+						else {
+							csv_article_ID[count] = article_ID;
+							count++;
+						}
 					}
 				}
 			}
+			if(csv_article_ID[0] == null)
+				csv_article_ID[0] = "NO ARTICLES ARE FOUND!!";
 			/*
-			for(int j=0;j<csv_atricle_ID.length;j++) {
-				if(csv_atricle_ID[j] != null)
-					System.out.println(csv_atricle_ID[j]);
+			for(int j=0;j<csv_article_ID.length;j++) {
+				if(csv_article_ID[j] != null)
+					System.out.println(csv_article_ID[j]);
 			}
 			*/
 		} catch (FileNotFoundException e) {
 			// TODO 自動產生的 catch 區塊
 			e.printStackTrace();
 		}
-        return csv_atricle_ID;
+        return csv_article_ID;
 	}
 	
 	public static void main(String[] args) {
