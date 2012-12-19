@@ -28,6 +28,7 @@ public class Thematic {
 		//新加測試結束，JSONArray型態的ja為一陣列格式。若要取得第一筆資料可用get(0)來獲取
 		//EX:ja.get(0) (型態為object而非string)
 		Screen screen = new Screen();
+		screen.sendStr2JCB("                                                             ");
 		for(i = 0;i < ja.length();i++){
 			screen.sendStr2JCB(ja.get(i).toString());
 		}

@@ -69,14 +69,13 @@ public class Screen{
         
         tokenid = new JComboBox<String>();
         menu.add(tokenid);
-        
-        
-        
+   
         model = new DefaultListModel<String>();
         list = new JList<String>(model);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane  pane= new JScrollPane(list);
         pane.setBackground(Color.pink);
-        pane.setBounds(10, 260, width-25, 100);
+        pane.setBounds(10, 150, width-25, 100);
         
         
         
@@ -95,7 +94,7 @@ public class Screen{
         board = new JTextArea("Tasyt!");
         board.setEnabled(false);
         board.setBackground(new Color(250, 240, 230));
-        board.setBounds(10, 150, width-25, 100);
+        board.setBounds(10, 260, width-25, 100);
         board.setFont(new Font("Times New Roman", Font.BOLD, 20));
         board.setBorder(new BevelBorder(BevelBorder.LOWERED));//設定框線
         
@@ -119,7 +118,8 @@ public class Screen{
         //以下均為事件
         but.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-            	board.setText("");
+            	
+            	board.setText(list.getSelectedValue().toString());
             }
         });
         /* button choice listener:
@@ -131,7 +131,7 @@ public class Screen{
         		model.clear();
             	int i = 0;
             	String str = tokenid.getSelectedItem().toString();
-            	board.setText(tokenid.getSelectedItem().toString());
+            	//board.setText(str);
             	
             	String[] textid = null;
             	textid = new String[50];
