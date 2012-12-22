@@ -11,3 +11,5 @@ Thematic
   
                           注意:由於是寫死，所以沒用到的部分會成為null
   以上都請先宣告 Main_Process 變數名稱 = new Main_Process();    
+  
+  public String article_recovery(String) : 回傳文章內容，參數請傳入文章ID
