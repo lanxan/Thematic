@@ -138,10 +138,11 @@ public class Main_Process {
 			for(int i=0;i<j_ob.getJSONObject("TextItem").getJSONArray(ID).length();i++) {
 				if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<s>") == 0)
 					str_readLine = str_readLine.concat("\n");
+				else if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<P>") == 0)
+					str_readLine = str_readLine.concat("   ");
 				else
 					str_readLine = str_readLine.concat(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString()+" ");
 			}
-			
 			//System.out.println(str_readLine);
 		} catch (JSONException e) {
 			// TODO 自動產生的 catch 區塊
@@ -152,9 +153,8 @@ public class Main_Process {
 	public static void main(String[] args) {
 		try {
 			Main_Process mp = new Main_Process();
-			//new Main_Process().article_recovery("ea7aacd36a9fdbf871073d729776db86");
 			String st = null;
-			st = mp.article_recovery("5af9854e5f7d69f0828eea8a08567f5d");
+			st = mp.article_recovery("9ff5a3eabf413fca4cc38553c376897e");
 			System.out.println(st);
 
 		} catch (IOException e) {
