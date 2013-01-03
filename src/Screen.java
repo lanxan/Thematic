@@ -137,7 +137,8 @@ public class Screen{
         textAtt.add(pane);
       //create a button to show the selected text
         JButton txc = new JButton("Read");
-        txc.setBounds((width-150+10+10), 59, 70, 30);
+        txc.setBounds((width-150+10+10), 59, 80, 30);
+        txc.setFont(new Font("º–∑¢≈È", Font.BOLD, 20));
         textAtt.add(txc);
       //match word label
         JLabel mat = new JLabel("Match:");
