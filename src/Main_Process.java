@@ -126,7 +126,7 @@ public class Main_Process {
 					//System.out.println(T_T.get(i).toString()+" : "+j_ob_1.getJSONObject("Product").getJSONArray(T_T.get(i).toString()).get(0));
 					System.out.println(T_T.get(i).toString()+" : "+produrctName_return(T_T.get(i).toString()));
 					while(fuck[cc] != null) {
-						System.out.println(fuck[cc]+" : "+match(fuck[cc],T_T.get(i).toString()));
+						//System.out.println(fuck[cc]+" : "+match(fuck[cc],T_T.get(i).toString()));
 						fuck[cc] = null;
 						cc++;
 					}

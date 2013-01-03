@@ -32,11 +32,11 @@ public class Screen{
 	
 	private static JTextArea board;		//用static才能在別的地方使用Screen.function()
 	
-	private static int width = 800;
-	private static int height = 600;
+	private static int width = 1280;
+	private static int height = 720;
 	
 	public Screen(){
-		JFrame demo = new JFrame("Demo");
+		JFrame demo = new JFrame("Article keyword aware product recommendation system");
         demo.setSize(width, height);//設定視窗大小
         demo.setLocationRelativeTo(null);//設定視窗置中
         demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//設定右上角叉號刪除功能
@@ -95,7 +95,7 @@ public class Screen{
         board.setEnabled(false);
        // board.setLineWrap(true);
         board.setBackground(new Color(250, 240, 230));
-        board.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        board.setFont(new Font("Times New Roman", Font.BOLD, 20));
         board.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(74, 146, 75), new Color(74, 146, 75)));//設定框線
         
         JScrollPane spText = new JScrollPane(board);
@@ -106,12 +106,14 @@ public class Screen{
       //create a product list 
         // show product id
         tokenid = new JComboBox<String>();
+        tokenid.setFont(new Font("標楷體", Font.BOLD, 20));
         tokenid.setBounds(10, 10, 200, 30);
         product.add(tokenid);
         
       //宣告choice按鈕
         JButton cho = new JButton("Choice");
-        cho.setBounds(205, 10, 76, 30);
+        cho.setFont(new Font("標楷體", Font.BOLD, 20));
+        cho.setBounds(205, 10, 100, 30);
         product.add(cho);
         
       //show product name
@@ -127,6 +129,7 @@ public class Screen{
         model = new DefaultListModel<String>();
         list = new JList<String>(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setFont(new Font("標楷體", Font.BOLD, 20));
         
         JScrollPane pane= new JScrollPane(list);
         pane.setBackground(Color.pink);
@@ -145,10 +148,13 @@ public class Screen{
       //show the match word in the text
         matchWord = new JTextArea();
         matchWord.setEnabled(false);
-        matchWord.setBounds(80, 100, 400, 30);
-        matchWord.setBorder(new BevelBorder(BevelBorder.LOWERED));
         matchWord.setFont(new Font("Times New Roman", Font.BOLD, 20));
-        textAtt.add(matchWord);
+        
+        JScrollPane spMat = new JScrollPane(matchWord);
+        spMat.setBounds(80, 100, 500, 30);
+        spMat.setBorder(new BevelBorder(BevelBorder.LOWERED));
+         
+        textAtt.add(spMat);
         
         
       //把排列版面的控制權拿出來
@@ -190,7 +196,6 @@ public class Screen{
 					e1.printStackTrace();
 				} finally {
 	            	while(textid[i] != null){
-	            		System.out.println(str+":"+textid[i]);
 	        			sendStr2List(textid[i]);
 	        			i++;
 	        		}
