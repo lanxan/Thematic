@@ -152,7 +152,7 @@ public class Screen{
         matchWord.setFont(new Font("Times New Roman", Font.BOLD, 20));
         
         JScrollPane spMat = new JScrollPane(matchWord);
-        spMat.setBounds(80, 100, 500, 30);
+        spMat.setBounds(80, 95, 500, 44);
         spMat.setBorder(new BevelBorder(BevelBorder.LOWERED));
          
         textAtt.add(spMat);
