@@ -14,17 +14,13 @@ public class Main_Process {
 	 * @throws IOException 
 	 */
 	/*json用*/
-	private FileReader frj = null;
-	private BufferedReader brj = null;
 	private StringBuilder readStr = new StringBuilder("");
 	private Boolean judge = false;
 	private JSONObject j_ob = null;
 	private JSONObject j_ob_1 = null;
-	private JSONObject j_ob_2 = null;
+	private JSONObject j_ob_match = null;
     JSONArray j_a = null;
 	/*result 用*/
-	private FileReader fr = null;
-	private BufferedReader br = null;
 	private String article_ID = null,product_temp = null;
 	private String csv_product_ID;
 	private String match_position = null;
@@ -32,11 +28,10 @@ public class Main_Process {
 	int count = 0;
 	/*共用*/
 	private String str_readLine = "";
-	
-	public JSONArray JSON_productID_read() throws IOException {
+	public String js_build(String filename) throws IOException {
 		
-		frj = new FileReader("myProduct.json");
-        brj = new BufferedReader(frj);
+		Reader frj = new FileReader(filename);
+		BufferedReader brj = new BufferedReader(frj);
        
         while(brj.ready()) {
         	str_readLine = brj.readLine();
@@ -50,25 +45,22 @@ public class Main_Process {
         		judge = true;
         	}
         }
-        
-		try {
-			j_ob = new JSONObject(readStr.toString());
-			//取得產品ID的集合:j_a
-			j_a = j_ob.getJSONObject("Product").names();
-		} catch (JSONException e1) {
-			// TODO 自動產生的 catch 區塊
-			e1.printStackTrace();
-		}
-		//frj.close();
-		readStr.delete(0, readStr.length());
+        judge = false;
+        return readStr.toString();
+	}
+	public JSONArray JSON_productID_read() throws IOException, JSONException {
 		
+        j_ob = new JSONObject(js_build("myProduct.json"));
+		j_a = j_ob.getJSONObject("Product").names();
+		readStr.delete(0, readStr.length());
+
 		return j_a;
 	}
 	public String[] result_search(String search_str) throws IOException {
 	
         try {
-			fr = new FileReader("result.csv");
-			br = new BufferedReader(fr);
+        	Reader fr = new FileReader("result.csv");
+        	BufferedReader br = new BufferedReader(fr);
 	
 			while (br.ready()) {
 				str_readLine = br.readLine();
@@ -93,12 +85,6 @@ public class Main_Process {
 			}
 			if(csv_article_ID[0] == null)
 				csv_article_ID[0] = "NO ARTICLES ARE FOUND!!";
-			/*
-			for(int j=0;j<csv_article_ID.length;j++) {
-				if(csv_article_ID[j] != null)
-					System.out.println(csv_article_ID[j]);
-			}
-			*/
 		} catch (FileNotFoundException e) {
 			// TODO 自動產生的 catch 區塊
 			e.printStackTrace();
@@ -106,69 +92,30 @@ public class Main_Process {
         count = 0;
         return csv_article_ID;
 	}
-	public String article_recovery(String ID) throws IOException {
-		
-		frj = new FileReader("mytext.json");
-        brj = new BufferedReader(frj);
-		
-        while(brj.ready()) {
-        	str_readLine = brj.readLine();
-        	if(judge == true) {
-        		readStr.append(str_readLine.trim());
-        		judge = false;
-        	}
-        	else
-        		readStr.append(str_readLine.replaceAll(" ", ""));
-        	if(str_readLine.endsWith("[")) {
-        		judge = true;
-        	}
-        }
-        
-        try {
-			j_ob = new JSONObject(readStr.toString());
-			str_readLine = "";
+	public String article_recovery(String ID) throws IOException, JSONException {
+
+		j_ob = new JSONObject(js_build("mytext.json"));
+		readStr.delete(0, readStr.length());
+		str_readLine = "";
 			
-			for(int i=0;i<j_ob.getJSONObject("TextItem").getJSONArray(ID).length();i++) {
-				if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<s>") == 0)
-					str_readLine = str_readLine.concat("\n");
-				else if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<P>") == 0)
-					str_readLine = str_readLine.concat("   ");
-				else
-					str_readLine = str_readLine.concat(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString()+" ");
-			}
-			//System.out.println(str_readLine);
-		} catch (JSONException e) {
-			// TODO 自動產生的 catch 區塊
-			e.printStackTrace();
+		for(int i=0;i<j_ob.getJSONObject("TextItem").getJSONArray(ID).length();i++) {
+			if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<s>") == 0)
+				str_readLine = str_readLine.concat("\n");
+			else if(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString().compareTo("<P>") == 0)
+				str_readLine = str_readLine.concat("   ");
+			else
+				str_readLine = str_readLine.concat(j_ob.getJSONObject("TextItem").getJSONArray(ID).get(i).toString()+" ");
 		}
+
         return str_readLine;
 	}
 	public void test() throws IOException, JSONException {
 		
 		Reader zx = new FileReader("result.csv");
 		BufferedReader qw = new BufferedReader(zx);
-		Reader zxc = new FileReader("myProduct.json");
-        BufferedReader qwe = new BufferedReader(zxc);
         String[] fuck = new String[50];
         int cc = 0;
-        while(qwe.ready()) {
-        	str_readLine = qwe.readLine();
-        	if(judge == true) {
-        		readStr.append(str_readLine.trim());
-        		judge = false;
-        	}
-        	else
-        		readStr.append(str_readLine.replaceAll(" ", ""));
-        	if(str_readLine.endsWith("[")) {
-        		judge = true;
-        	}
-        }
-        
-        judge = false;
-        j_ob_1 = new JSONObject(readStr.toString());
-        
-        readStr.delete(0, readStr.length());
-        qwe.close();zxc.close();qw.close();zx.close();
+        qw.close();zx.close();
         
 		try {
 			JSONArray T_T = null;
@@ -176,7 +123,8 @@ public class Main_Process {
 			for(int i=0;i<T_T.length();i++) {
 				fuck = result_search(T_T.get(i).toString());
 				if(fuck[0] != null) {
-					System.out.println(T_T.get(i).toString()+" : "+j_ob_1.getJSONObject("Product").getJSONArray(T_T.get(i).toString()).get(0));
+					//System.out.println(T_T.get(i).toString()+" : "+j_ob_1.getJSONObject("Product").getJSONArray(T_T.get(i).toString()).get(0));
+					System.out.println(T_T.get(i).toString()+" : "+produrctName_return(T_T.get(i).toString()));
 					while(fuck[cc] != null) {
 						System.out.println(fuck[cc]+" : "+match(fuck[cc],T_T.get(i).toString()));
 						fuck[cc] = null;
@@ -196,24 +144,10 @@ public class Main_Process {
 	public String match(String art,String prod) throws IOException, JSONException {
 		Reader f_csv = new FileReader("result.csv");
 		BufferedReader br_csv = new BufferedReader(f_csv);
-		Reader f_js = new FileReader("mytext.json");
-        BufferedReader br_js = new BufferedReader(f_js);
 		String ttt = "";
-		
-		while(br_js.ready()) {
-        	str_readLine = br_js.readLine();
-        	if(judge == true) {
-        		readStr.append(str_readLine.trim());
-        		judge = false;
-        	}
-        	else
-        		readStr.append(str_readLine.replaceAll(" ", ""));
-        	if(str_readLine.endsWith("[")) {
-        		judge = true;
-        	}
-        }
-		judge = false;
-		j_ob_2 = new JSONObject(readStr.toString());
+
+		j_ob_match = new JSONObject(js_build("mytext.json"));
+		readStr.delete(0, readStr.length());
 		
 		while (br_csv.ready()) {
 			str_readLine = br_csv.readLine();
@@ -225,25 +159,24 @@ public class Main_Process {
 					if(prod.compareTo(product_temp.split(" ")[i]) == 0) {
 						product_temp = str_readLine.split(":")[1];
 						match_position = product_temp.split("-")[0];
-						ttt = ttt.concat(" "+j_ob_2.getJSONObject("TextItem").getJSONArray(art).get(Integer.valueOf(match_position)-1).toString());
+						ttt = ttt.concat(" "+j_ob_match.getJSONObject("TextItem").getJSONArray(art).get(Integer.valueOf(match_position)-1).toString());
 					}
 				}
 			}
 		}
-		readStr.delete(0, readStr.length());
 		return ttt;
 	}
-	public static void main(String[] args) {
+	public String produrctName_return(String prod) throws IOException, JSONException {
+
+        j_ob_1 = new JSONObject(js_build("myProduct.json"));
+        readStr.delete(0, readStr.length());
+ 
+		return j_ob_1.getJSONObject("Product").getJSONArray(prod).get(0).toString();
+	}
+	public static void main(String[] args) throws IOException, JSONException {
 		Main_Process mp = new Main_Process();
-		
-		try {
-			mp.test();
-		} catch (IOException e) {
-			// TODO 自動產生的 catch 區塊
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO 自動產生的 catch 區塊
-			e.printStackTrace();
-		}
+
+		mp.test();
+		//System.out.println(mp.article_recovery("2ed37333ded300102b24d1c9d9a105b0"));
 	}
 }
