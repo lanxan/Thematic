@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -170,22 +172,29 @@ public class Main_Process {
         readStr.delete(0, readStr.length());
         qwe.close();zxc.close();qw.close();zx.close();
         
+        File file = new File("check.txt");
+		FileWriter fw = new FileWriter(file);
+		
 		try {
 			JSONArray T_T = null;
 			T_T = JSON_productID_read();
 			for(int i=0;i<T_T.length();i++) {
 				fuck = result_search(T_T.get(i).toString());
 				if(fuck[0] != null) {
-					System.out.println(T_T.get(i).toString()+" : "+j_ob_1.getJSONObject("Product").getJSONArray(T_T.get(i).toString()).get(0));
+					
+					fw.write(T_T.get(i).toString()+" : "+j_ob_1.getJSONObject("Product").getJSONArray(T_T.get(i).toString()).get(0)+"\r\n");
+					
 					while(fuck[cc] != null) {
-						System.out.println(fuck[cc]+" : "+match(fuck[cc],T_T.get(i).toString()));
+						
+						fw.write(fuck[cc]+" : "+match(fuck[cc],T_T.get(i).toString())+"\r\n");
+						
 						fuck[cc] = null;
 						cc++;
 					}
 				}
 				cc = 0;
 				fuck = null;
-				System.out.println("********************************************************************************************************");
+				fw.write("********************************************************************************************************\r\n");
 			}
 			
 		} catch (JSONException e) {
@@ -233,15 +242,13 @@ public class Main_Process {
 		readStr.delete(0, readStr.length());
 		return ttt;
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JSONException {
 		Main_Process mp = new Main_Process();
 		
 		try {
-			mp.test();
+			mp.test();	
+			//System.out.println(mp.article_recovery("5af9854e5f7d69f0828eea8a08567f5d"));
 		} catch (IOException e) {
-			// TODO 自動產生的 catch 區塊
-			e.printStackTrace();
-		} catch (JSONException e) {
 			// TODO 自動產生的 catch 區塊
 			e.printStackTrace();
 		}

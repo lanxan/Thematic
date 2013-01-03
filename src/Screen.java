@@ -15,9 +15,8 @@ public class Screen{
 	
 	private Container con;
 	private Panel text;
-	private Panel menu;
+	private Panel product;
 	
-	private JButton but;
 	//private JRadioButton bis, fav, prod, other;
 	
 	private JComboBox<String> tokenid;
@@ -29,8 +28,8 @@ public class Screen{
 	private	JScrollPane spText;
 	private ButtonGroup butType;
 	
-	private static int width = 400;
-	private static int height = 500;
+	private static int width = 800;
+	private static int height = 600;
 	
 	public Screen(){
 		JFrame demo = new JFrame("Demo");
@@ -45,31 +44,23 @@ public class Screen{
         
         text = new Panel();
         text.setBackground(Color.blue);
-        menu = new Panel();
-        menu.setBounds(0, 70, width, 60);
+        product = new Panel();
+        product.setBounds(0, 0, width, 80);
+        product.setBackground(Color.black);
+        product.setLayout(null);
         
-        //四個選項
-/*        bis = new JRadioButton("Business");
-        bis.setBackground(Color.white);        
-        fav = new JRadioButton("Favorite");
-        fav.setBackground(Color.white);
-        prod = new JRadioButton("Products");
-        prod.setBackground(Color.white);
-        other = new JRadioButton("Other");
-        other.setBackground(Color.white);*/
-        
-        //把上述的四個選項合成一個群組
-/*        butType = new ButtonGroup();
-        butType.add(bis);
-        butType.add(fav);
-        butType.add(prod);
-        butType.add(other);*/
-        
-        //create a menu list 
-        
+        //create a product list 
         tokenid = new JComboBox<String>();
-        menu.add(tokenid);
-   
+        product.add(tokenid);
+        tokenid.setBounds(10, 10, 200, 30);
+        
+        //宣告choice按鈕
+        JButton cho = new JButton("Choice");
+        cho.setBounds(205, 10, 76, 30);
+        product.add(cho);
+        
+        
+        
         model = new DefaultListModel<String>();
         list = new JList<String>(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -77,18 +68,8 @@ public class Screen{
         pane.setBackground(Color.pink);
         pane.setBounds(10, 150, width-25, 100);
         
+          
         
-        
-        //宣告search按鈕，跟google的search很像
-        but = new JButton("Search");
-        but.setBounds(260, 40, 76, 20);
-        JButton cho = new JButton("Choise");
-        //cho.setBounds(260, 40, 76, 20);
-        menu.add(cho);
-        
-        //宣告輸入區域
-        txa = new JTextField();
-        txa.setBounds(55, 40, width-200, 22);
         
         //宣告訊息布告欄
         board = new JTextArea("Tasyt!");
@@ -100,15 +81,10 @@ public class Screen{
         
         spText = new JScrollPane(board);
         
-/*        menu.add(bis);
-        menu.add(fav);
-        menu.add(prod);
-        menu.add(other);*/
         
         con.setLayout(null);//把排列版面的控制權拿出來
-        con.add(txa);
-        con.add(but);
-        con.add(menu);
+        
+        con.add(product);
         con.add(board);
         con.add(pane);
         
@@ -116,12 +92,6 @@ public class Screen{
         demo.setVisible(true);
         
         //以下均為事件
-        but.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-            	
-            	board.setText(list.getSelectedValue().toString());
-            }
-        });
         /* button choice listener:
          * print the selected product id
          * list which text has this product
