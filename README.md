@@ -13,3 +13,8 @@ Thematic
   以上都請先宣告 Main_Process 變數名稱 = new Main_Process();    
   
   public String article_recovery(String) : 回傳文章內容，參數請傳入文章ID
+
+  public String produrctName_return(String prod):回傳產品名稱，參數傳入產品ID
+  
+  public String match(String art,String prod):回傳match到的字，參數傳入文章ID、產品ID
+  
